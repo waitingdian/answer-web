@@ -1,0 +1,23 @@
+{
+  "id": "1677480",
+  "name": "answer-web",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon",
+  "description": "lv  答题",
+  "glyphs": [
+    {
+      "icon_id": "1281489",
+      "name": "Invisible",
+      "font_class": "67bukejian",
+      "unicode": "e64e",
+      "unicode_decimal": 58958
+    },
+    {
+      "icon_id": "5706644",
+      "name": "icon_visible",
+      "font_class": "icon-",
+      "unicode": "e71f",
+      "unicode_decimal": 59167
+    }
+  ]
+}
