@@ -391,9 +391,9 @@
             rightResultValue: 1,
             resultList: [
               { label: '将备注添加到代码的最后一行之后，以空白行分隔', value: 1 },
-              { label: '将备注置于#符号后添加到任意一行', value: 1 },
-              { label: '将备注置于括号中添加到任意一行', value: 1 },
-              { label: '将备注添加到代码的第一行之前，以空白行分割', value: 1 },
+              { label: '将备注置于#符号后添加到任意一行', value: 2 },
+              { label: '将备注置于括号中添加到任意一行', value: 3},
+              { label: '将备注添加到代码的第一行之前，以空白行分割', value: 4 },
             ],
             name: '你为公司开发一个Python程序。你想要为代码添加备注，以便其他同事能看懂你的程序代码。你应该怎么做？',
             desc: ''
@@ -603,7 +603,7 @@
           {
             id: 26,
             type: 2,
-            resultValue: '',
+            resultValue: [],
             rightResultValue: [1,2],
             resultList: [
               { label: 'fromrandom import randint print(randint(0,20)*5)', value: 1 },

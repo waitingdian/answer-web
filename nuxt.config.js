@@ -17,6 +17,8 @@ module.exports = {
     script: [
       {type: 'text/javascript', src: '//at.alicdn.com/t/font_1387596_o1j2dgknfyk.js'},
       {type: 'text/javascript', src: '/iconfont/iconfont.js'}
+      // {type: 'text/javascript', src: 'https://unpkg.com/vue/dist/vue.js'},
+      // {type: 'text/javascript', src: 'https://unpkg.com/element-ui/lib/index.js'}
     ]
   },
   /*
@@ -52,11 +54,25 @@ module.exports = {
   ** Build configuration
   */
   build: {
+    // analyze: true,
     transpile: [/^element-ui/],
+    maxChunkSize: 300000,
+    babel: {
+      'plugins': [
+        [
+          'component',
+          {
+            'libraryName': 'element-ui',
+            'styleLibraryName': 'theme-chalk'
+          }
+        ]
+      ],
+      'comments': true
+    },
     /*
     ** You can extend webpack config here
     */
     extend (config, ctx) {
     }
-  }
+  },
 }
