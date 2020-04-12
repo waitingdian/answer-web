@@ -33,7 +33,7 @@
           </div>
           <!-- 单选题-->
           <div v-if="item.type == 3" class="judgement p-l-30">
-<!--            {{item.resultValue}}-->
+            {{item.resultValue}} ---
             <p  v-for="(result, resultIndex) in item.resultList" :key="resultIndex">
               {{result.label}}
               <el-radio v-for="(buttonItem, buttonIndex) in result.buttonList"
@@ -49,6 +49,7 @@
 <!--                    <el-checkbox v-model="checked2" label="备选项2" border></el-checkbox>-->
 <!--                  </div>-->
           <div v-if="item.type == 2">
+            {{item.resultValue}} ---
             <el-checkbox v-for="(result, resultIndex) in item.resultList"
                          :key="resultIndex" v-model="item.resultValue[resultIndex]"
                          :label="result.value" border>{{result.label}}
@@ -59,19 +60,24 @@
         </div>
       </div>
       <div class="text-center p-t-15">
-<!--        <el-button type="primary" @click="doPrev" v-if="activeAnswer > 1">上一题</el-button>-->
+        <el-button type="primary" @click="doPrev" v-if="activeAnswer > 1">上一题</el-button>
         <el-button type="primary" @click="doNext" v-if="activeAnswer < 40">下一题</el-button>
         <el-button type="primary" @click="submitAnswer" v-if="activeAnswer == 40">交 卷</el-button>
       </div>
+
+      <AnswerTabs :answerList="answerList" :activeAnswer="activeAnswer" @toggleAnswer="toggleAnswer"></AnswerTabs>
+
     </div>
   </div>
 </template>
 
 <script>
   import AnswerRuleDialog from '../components/answerRuleDialog'
+  import AnswerTabs from '../components/answerTabs'
+
   export default {
     name: 'answerRuleDialogComp',
-    components: {AnswerRuleDialog},
+    components: {AnswerRuleDialog, AnswerTabs},
     data() {
       return {
         countDown: '',
@@ -956,20 +962,66 @@
       }
     },
     methods: {
+      toggleAnswer (activeAnswer) {
+        this.activeAnswer = activeAnswer
+      },
       submitAnswer (){
         //todo
-        this.loading = true
-        setTimeout(() => {
-          this.loading = false
-          // this.$message.success("交卷成功")
-          localStorage.clear()
-          this.$router.replace("/success")
-        }, 500)
+        let answerResultCount = 0;
+        for(let i = 0; i < this.answerList.length; i ++) {
+          let it = this.answerList[i];
+          if (it.type == 1 && it.resultValue) {
+            answerResultCount = answerResultCount + 1
+          } else if (it.type == 2) {
+            let flag = false
+            it.resultValue.forEach((childItem) => {
+              if (childItem) {
+                flag = true
+              }
+            })
+            if (flag) {
+              console.log(it.id)
+              answerResultCount = answerResultCount + 1
+            }
+          } else if (it.type == 3) {
+            let flag = false
+            it.resultValue.forEach((childItem) => {
+              if (JSON.stringify(childItem) != '{}') {
+                flag = true
+              }
+            })
+            if (flag) {
+              console.log(it.id)
+              answerResultCount = answerResultCount + 1
+            }
+          }
+        }
+        let text = this.$createElement('div', {
+          domProps: {
+            innerHTML: `共有试题${this.answerList.length}题,已做<span style="color: red"> ${answerResultCount} </span>题,您确认要交卷吗`
+          }
+        })
+        this.$confirm(text, '交卷', {
+          confirmButtonText: '确定交卷',
+          cancelButtonText: '再检查一下',
+          type: 'warning'
+        }).then(() => {
+          this.loading = true
+          setTimeout(() => {
+            this.loading = false
+            // this.$message.success("交卷成功")
+            localStorage.clear()
+            this.$router.replace("/success")
+          }, 500)
+        }).catch(() => {
+
+        });
+
       },
-      // doPrev () {
-      //   if (this.activeAnswer <=1) return
-      //   this.activeAnswer = this.activeAnswer - 1
-      // },
+      doPrev () {
+        if (this.activeAnswer <=1) return
+        this.activeAnswer = this.activeAnswer - 1
+      },
       doNext () {
         localStorage.setItem('isAnswer', '1');
         localStorage.setItem('answerWebAnswerList', JSON.stringify(this.answerList));
@@ -992,7 +1044,49 @@
                 this.timer = null
               }
           return lefth + ": " + leftm + ": " + lefts;  //返回倒计时的字符串
-      }
+      },
+      // 必填提交逻辑
+      // submitAnswer (){
+      //   //todo
+      //   let flag = true, errorIndex;
+      //   for(let i = 0; i < this.answerList.length; i ++) {
+      //     let it = this.answerList[i];
+      //     if (it.type == 1 && !it.resultValue) {
+      //       flag = false
+      //     } else if (it.type == 2) {
+      //       let type2Flag = true
+      //       it.resultValue.forEach((childItem) => {
+      //         if (!childItem) {
+      //           type2Flag = true
+      //         }
+      //       })
+      //       flag = type2Flag
+      //     } else if (it.type == 3) {
+      //       it.resultValue.forEach((childItem) => {
+      //         if (JSON.stringify(childItem) == '{}') {
+      //           flag = false
+      //         }
+      //       })
+      //
+      //     }
+      //     if (!flag) {
+      //       errorIndex = it.id;
+      //       console.log(it)
+      //       this.$message.error(`请先完成第${errorIndex}题,再提交`)
+      //       break;
+      //     }
+      //   }
+      //   if (!flag) {
+      //     return false
+      //   }
+      //   this.loading = true
+      //   setTimeout(() => {
+      //     this.loading = false
+      //     // this.$message.success("交卷成功")
+      //     localStorage.clear()
+      //     this.$router.replace("/success")
+      //   }, 500)
+      // },
     }
   }
 </script>
@@ -1040,6 +1134,7 @@
       margin-right: 30px;
     }
     .answer-content{
+      position: relative;
       width: 1000px;
       margin: 0 auto;
     }
