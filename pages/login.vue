@@ -65,6 +65,7 @@
         },
         userList: [],
         names: [
+          "闫赛",
           "孙佳乐",
           "张凯闻",
           "吕启恒",
@@ -129,6 +130,7 @@
         ],
         nickNames: [],
         cards: [
+          410622199506157020,
           310115200612078000,
           310101201002233277,
           310115200809141916,
@@ -234,10 +236,17 @@
               return false
             }
             localStorage.clear()
-            this.$message.success("登录成功")
+            var loading = this.$loading({
+              lock: true,
+              text: '登录中...',
+              spinner: 'el-icon-loading',
+              background: 'rgba(255, 255, 255, 0.8)'
+            });
             setTimeout(() => {
+              loading.close();
+              this.$message.success("登录成功")
               this.$router.push("/answer?type=1")
-            }, 2000)
+            }, 3000)
           } else {
             console.log('error submit!!');
             return false;
