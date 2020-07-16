@@ -33,7 +33,6 @@
           </div>
           <!-- 单选题-->
           <div v-if="item.type == 3" class="judgement p-l-30">
-            {{item.resultValue}} ---
             <p  v-for="(result, resultIndex) in item.resultList" :key="resultIndex">
               {{result.label}}
               <el-radio v-for="(buttonItem, buttonIndex) in result.buttonList"
@@ -49,7 +48,6 @@
 <!--                    <el-checkbox v-model="checked2" label="备选项2" border></el-checkbox>-->
 <!--                  </div>-->
           <div v-if="item.type == 2">
-            {{item.resultValue}} ---
             <el-checkbox v-for="(result, resultIndex) in item.resultList"
                          :key="resultIndex" v-model="item.resultValue[resultIndex]"
                          :label="result.value" border>{{result.label}}
@@ -910,20 +908,18 @@
           {
             id: 40,
             type: 3,
-            resultValue: [{},{},{},{},{}],
-            rightResultValue: [1,2,3,4],
+            resultValue: [{},{},{}],
+            rightResultValue: [3,2,1],
             resultList:  [
-              { label: 'age = 2', value: 1, buttonList: ["bool", "float", "int", "str"]},
-              { label: 'minor = False', value: 2, buttonList: ["bool", "float", "int", "str"]},
-              { label: 'name = “Contoso', value: 3, buttonList: ["bool", "float", "int", "str"]},
-              { label: 'weight = 123.5', value: 4, buttonList: ["bool", "float", "int", "str"]},
-              { label: 'zip = “81000”', value: 4, buttonList: ["bool", "float", "int", "str"]}
+              { label: '2', value: 1, buttonList: ["print(a // b)", "print(a % b) ", "print(a / b) "]},
+              { label: '3', value: 2, buttonList: ["print(a // b)", "print(a % b) ", "print(a / b) "]},
+              { label: '2.75', value: 3, buttonList: ["print(a // b)", "print(a % b) ", "print(a / b) "]},
             ],
             name: '你正在编写一个 Python 程序，该程序用于算术运算。你编写了以下代码：',
             desc: `
               a = 11 </br>
               b = 4 </br>
-              <p>请选择正确的运算表达式</p>
+              <p>请选择每项数学运算的结果是什么？<span style="font-size: 12px">(每个表达式可使用一次、多次或不使用)</span></p>
             `
           },
 

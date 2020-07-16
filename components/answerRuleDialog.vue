@@ -1,5 +1,5 @@
 <template>
-  <div class="answer-rule-dialog-comp">
+  <div class="answer-rule-dialog-comp fs-18">
     <el-dialog
             title="答题规则"
             class="answer-rule-dialog"
