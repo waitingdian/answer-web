@@ -8,7 +8,7 @@
             :visible.sync="answerRuleDialogVisible"
             width="560px">
       <div class="content fs-16">
-        <p class="title">本次评测的时间为<span class="text-red">60分钟</span>，请在规定时间内作答。</p>
+        <p class="title" style="font-size: 14px;font-weight: bold;">本次评测的时间为<span class="text-red">60分钟</span>，请在规定时间内作答。</p>
         <p>1、进入答题页面，评测开始计时。</p>
         <p>2、再评测过程中，您可以通过顶部的评测时间来掌握自己的答题进度。</p>
         <p>3、待所有题目都完成后，您可以点击下方的交卷结束评测。</p>
