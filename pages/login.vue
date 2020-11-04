@@ -9,7 +9,7 @@
         <div class="login-container">
           <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" class="demo-ruleForm pull-right">
             <!--            <p class="title">登  录</p>-->
-            <img src="URLhttps://zlybc.com/answer/toplog.png" style="display: block;margin: 0 auto" alt="">
+            <img src="https://zlybc.com/answer/toplog.png" style="display: block;margin: 0 auto" alt="">
             <el-form-item label="用户名" prop="userName">
               <el-input v-model="ruleForm.userName" maxLength="18" placeholder="用户名为身份证号码"></el-input>
             </el-form-item>
